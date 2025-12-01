@@ -1,0 +1,40 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  NODE_ENV: production
+
+before_script:
+  - echo "Installing project dependencies"
+  - npm install
+
+build_job:
+  stage: build
+  script:
+    - echo "Running build..."
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+  only:
+    - main
+
+test_job:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - npm test
+  only:
+    - main
+
+deploy_job:
+  stage: deploy
+  script:
+    - echo "Deploying to production server..."
+    - echo "Deployment success!"
+  environment:
+    name: production
+  only:
+    - main
