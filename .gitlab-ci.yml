@@ -1,19 +1,22 @@
+image: node:18
+
 stages:
   - build
   - test
   - deploy
 
-variables:
-  NODE_ENV: production
+cache:
+  paths:
+    - node_modules/
 
 before_script:
-  - echo "Installing project dependencies"
+  - echo "Installing dependencies..."
   - npm install
 
 build_job:
   stage: build
   script:
-    - echo "Running build..."
+    - echo "Building Project..."
     - npm run build
   artifacts:
     paths:
@@ -24,7 +27,7 @@ build_job:
 test_job:
   stage: test
   script:
-    - echo "Running tests..."
+    - echo "Running Tests..."
     - npm test
   only:
     - main
@@ -32,8 +35,8 @@ test_job:
 deploy_job:
   stage: deploy
   script:
-    - echo "Deploying to production server..."
-    - echo "Deployment success!"
+    - echo "Deploying application..."
+    - echo "Deployment completed successfully!"
   environment:
     name: production
   only:
